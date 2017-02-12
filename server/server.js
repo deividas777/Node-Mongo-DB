@@ -1,3 +1,5 @@
+require('./config/config.js');
+
 const _ = require('lodash');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -8,7 +10,7 @@ var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
 var app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
@@ -32,6 +34,8 @@ app.get('/todos', (req, res) => {
   });
 });
 
+//Find by ID
+
 app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
 
@@ -45,10 +49,13 @@ app.get('/todos/:id', (req, res) => {
     }
 
     res.send({todo});
+
   }).catch((e) => {
     res.status(400).send();
   });
 });
+
+//Delete method
 
 app.delete('/todos/:id', (req, res) => {
   var id = req.params.id;
@@ -67,6 +74,8 @@ app.delete('/todos/:id', (req, res) => {
     res.status(400).send();
   });
 });
+
+//Update method
 
 app.patch('/todos/:id', (req, res) => {
   var id = req.params.id;
